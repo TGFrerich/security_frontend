@@ -17,10 +17,8 @@ export default function SignInPage () {
                 axios
                     .get("/api/csrf")
                     .then(() => axios.post("/api/users/login", {
-                        username,
-                        password
                     }, {
-                        headers: { "X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN") }
+                        headers: { Authorization: `Basic ${window.btoa(`${username}:${password}`)}` }
                     })).then(() => {
                     navigate("/");
                 }).catch(err => {
